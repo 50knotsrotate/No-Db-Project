@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,  {Component} from 'react';
 import './App.css';
+import axios from 'axios'; 
+import ConcertsDisplayer from './Components/eventsDisplayer/ConcertsDisplayer';
 
-function App() {
+
+ export default class App extends Component {
+   constructor(props){
+     super(props)
+     this.state = {
+       concertsComments: []
+
+     }
+   }
+
+   componentDidMount() {
+     axios.get('/api/concerts-comments').then((response) => {
+       console.log(response.data);
+       this.setState({
+          concertsComments: response.data
+       });
+     });
+   }
+
+   render(){  
+     const mappedconcertsComments = this.state.concertsComments.map(element => {
+      return (
+      <ConcertsDisplayer
+       name = {element.name}
+       date = {element.date}
+       content = {element.content}
+       concertId = {element.concertId}
+       idcomment = {element.idcomment}
+        />
+      );
+     });
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <header className="Header">Events</header>
     </div>
+    <main>
+    <div className="Body">{mappedconcertsComments}
+    </div>
+    </main>
+      </div>
   );
-}
+}}
 
-export default App;
+

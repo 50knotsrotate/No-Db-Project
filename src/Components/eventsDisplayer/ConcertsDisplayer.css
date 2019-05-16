@@ -1,0 +1,10 @@
+.ConcertsParent {
+    height: 300px;
+    width: 290px;
+    background-color: tan;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: right; 
+    text-align: right; 
+}
